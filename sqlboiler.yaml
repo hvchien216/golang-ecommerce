@@ -1,0 +1,31 @@
+schema: public
+pkgname: orm
+output: db/repository/orm
+no-hooks: true
+no-tests: true
+psql:
+  dbname: ecommerce
+  host: pg
+  port: 5432
+  user: ecommerce
+  pass: ''
+  sslmode: disable
+  blacklist:
+    - schema_migrations
+types:
+  - match:
+      type: types.Decimal # Replace the not null decimal fields with a easier to use lib.
+      nullable: false
+    replace:
+      type: decimal.Decimal
+    imports:
+      third_party:
+        - '"github.com/shopspring/decimal"'
+  - match:
+      type: types.NullDecimal
+      nullable: true
+    replace:
+      type: decimal.NullDecimal
+    imports:
+      third_party:
+        - '"github.com/shopspring/decimal"'ations

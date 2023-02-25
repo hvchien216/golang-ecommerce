@@ -1,0 +1,2 @@
+DROP TYPE IF EXISTS products_status CASCADE;
+DROP TABLE IF EXISTS "products";

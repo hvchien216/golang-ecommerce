@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  pg:
+    ports:
+      - "5432:5432"
+  db-migrate:
+    volumes:
+      - ../db/migrations:/api-migrations
+  redis:
+    ports:
+      - "6379:6379"
+  api:
+    image: ${PROJECT_NAME}-go-local:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/api:cached
+      - api-build-cache:/root/.cache/go-build
+volumes:
+  api-build-cache:
+    name: ${PROJECT_NAME}-api-build-cache
+networks:
+  network:
+    name: ${PROJECT_NAME}-local

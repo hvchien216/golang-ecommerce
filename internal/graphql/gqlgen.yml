@@ -1,0 +1,13 @@
+schema:
+  - schema/*.graphql
+
+exec:
+  filename: gqlgenerated.go
+  package: graphql
+
+skip_validation: true
+skip_mod_tidy: true
+
+#models:
+#  SortPageInput:
+#    model: code.in.spdigital.sg/sp-digital/vmi/api/internal/pkg/sortutil.SortPageInput

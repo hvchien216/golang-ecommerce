@@ -1,0 +1,17 @@
+schema:
+  - schema/*.graphql
+
+exec:
+  filename: gqlgenerated.go
+  package: gql
+
+skip_validation: true
+skip_mod_tidy: true
+
+models:
+  Product:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.Product
+  ProductStatus:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.ProductStatus
+  NewProductInput:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.NewProductInput

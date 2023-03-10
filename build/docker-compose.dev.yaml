@@ -11,11 +11,11 @@ services:
     ports:
       - "6379:6379"
   api:
-    image: ${PROJECT_NAME}-go-local:latest
+    image: ${PROJECT_NAME}-golang-local:latest
     ports:
       - "3000:3000"
     volumes:
-      - ./:/api:cached
+      - ../:/api:cached
       - api-build-cache:/root/.cache/go-build
 volumes:
   api-build-cache:

@@ -1,26 +1,48 @@
-CREATE TYPE "products_status" AS ENUM
-(
-    'out_of_stock',
-    'in_stock',
-    'running_low'
+-- Create the products_status enum type
+CREATE TYPE products_status AS ENUM (
+    'OUT_OF_STOCK',
+    'IN_STOCK',
+    'RUNNING_LOW'
+    );
+
+-- Create the products table
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    description VARCHAR,
+    slug VARCHAR,
+    code VARCHAR,
+    image VARCHAR,
+    images VARCHAR,
+    price FLOAT,
+    price_min FLOAT,
+    price_max FLOAT,
+    status products_status,
+    is_complete BOOLEAN,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE TABLE IF NOT EXISTS "products" (
-    "id" SERIAL PRIMARY KEY,
-    "name" varchar NOT NULL,
-    "description" varchar,
-    "slug" varchar,
-    "code" varchar,
-    "image" varchar,
-    "images" varchar,
-    "price" float,
-    "price_min" float,
-    "price_max" float,
-    "status" products_status,
-    "is_complete" boolean,
-    "created_at" timestamptz NOT NULL DEFAULT (now()),
-    "updated_at" timestamp
+-- Create the categories table
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR,
+    description VARCHAR,
+    parent_id INT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX ON "products" ("name");
+-- Create the product_categories join table
+CREATE TABLE product_categories (
+    product_id INT,
+    category_id INT,
+    PRIMARY KEY (product_id, category_id)
+);
 
+-- Create the index on the products table
+CREATE INDEX ON products (name);
+
+-- Create the foreign key constraints on the product_categories table
+ALTER TABLE product_categories ADD FOREIGN KEY (product_id) REFERENCES products (id);
+ALTER TABLE product_categories ADD FOREIGN KEY (category_id) REFERENCES categories (id);

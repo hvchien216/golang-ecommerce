@@ -1,10 +1,11 @@
 package productstorage
 
+import "github.com/hvchien216/golang-ecommerce/internal/pkg/db/pg"
+
 type sqlStore struct {
-	//db *gorm.DB
-	db string
+	db pg.PGExecutor
 }
 
-func NewSQLStore(db string) *sqlStore {
+func NewSQLStore(db pg.PGExecutor) *sqlStore {
 	return &sqlStore{db: db}
 }

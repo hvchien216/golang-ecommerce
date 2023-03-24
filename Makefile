@@ -41,7 +41,7 @@ api-dbup:
 api-dbdrop:
 	${COMPOSE} run --rm db-migrate sh -c './migrate -path /api-migrations -database $$DB_URL -verbose down'
 api-gen-models:
-	@${API_COMPOSE} sh -c 'sqlboiler --wipe psql'
+	@${API_COMPOSE} sh -c 'sqlboiler --wipe psql && GOFLAGS="-mod=vendor"'
 	@echo "----------sqlboiler is done----------"
 gql:
 	@cd internal/gql && go run github.com/99designs/gqlgen generate
@@ -49,11 +49,15 @@ gql:
 api-go-generate:
 	${API_COMPOSE} sh -c "go generate ./..."
 api-test:
-	@${API_COMPOSE} sh -c "go test -failfast -timeout 5m ./..."
+	@${API_COMPOSE} sh -c "go test -mod=vendor -failfast -timeout 5m ./..."
 #	@${API_COMPOSE} sh -c "go test -mod=vendor -coverprofile=c.out -failfast -timeout 5m ./..."
 api-run:
 	@#${API_COMPOSE} sh -c ""
-	@${API_COMPOSE} sh -c "go run cmd/main.go"
+	@${API_COMPOSE} sh -c "go run -mod=vendor cmd/main.go"
+api-update-vendor:
+	@${API_COMPOSE} sh -c "go mod tidy && go mod vendor"
+api-gen-mocks:
+	@${API_COMPOSE} sh -c "mockery --dir internal/modules --all --recursive --inpackage"
 
 # ----------------------------
 # Base Methods

@@ -1,33 +1,33 @@
-enum ProductStatus {
-    OUT_OF_STOCK
-    IN_STOCK
-    RUNNING_LO
-}
-type Product {
-    id: Int!
-    name: String!
-    description: String
-    slug: String
-    code: String
-    image: String
-    images: String
-    price: Float!
-    price_min: Float
-    price_max: Float
-    status: ProductStatus!
-    is_complete: Boolean!
-    created_at: Time
-    updated_at: Time
-}
-
-input NewProductInput {
-    name: String!
-    description: String
-    slug: String
-    code: String
-    image: String
-    images: String
-    price: Float!
-    price_min: Float
-    price_max: Float
-}
+#enum ProductStatus {
+#    OUT_OF_STOCK
+#    IN_STOCK
+#    RUNNING_LO
+#}
+#type Product {
+#    id: Int!
+#    name: String!
+#    description: String
+#    slug: String
+#    code: String
+#    image: String
+#    images: String
+#    price: Float!
+#    price_min: Float
+#    price_max: Float
+#    status: ProductStatus!
+#    is_complete: Boolean!
+#    created_at: Time
+#    updated_at: Time
+#}
+#
+#input NewProductInput {
+#    name: String!
+#    description: String
+#    slug: String
+#    code: String
+#    image: String
+#    images: String
+#    price: Float!
+#    price_min: Float
+#    price_max: Float
+#}

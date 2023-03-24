@@ -1,3 +1,4 @@
 type Mutation {
-    createProduct(input: NewProductInput!): Product!
+    createCategory(input: NewCategoryInput!): Category!
+    updateCategory(id: Int!, name: String!, description: String, parent_id: Int): Category!
 }

@@ -1,0 +1,15 @@
+type Category {
+    id: Int!
+    name: String!
+    description: String
+    parent: Category
+    children: [Category]
+    created_at: Time
+    updated_at: Time
+}
+
+input NewCategoryInput {
+    name: String!
+    description: String!
+    parent_id: Int
+}

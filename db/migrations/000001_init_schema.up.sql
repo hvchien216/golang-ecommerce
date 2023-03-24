@@ -26,7 +26,7 @@ CREATE TABLE products (
 -- Create the categories table
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name VARCHAR,
+    name VARCHAR NOT NULL,
     description VARCHAR,
     parent_id INT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -46,3 +46,7 @@ CREATE INDEX ON products (name);
 -- Create the foreign key constraints on the product_categories table
 ALTER TABLE product_categories ADD FOREIGN KEY (product_id) REFERENCES products (id);
 ALTER TABLE product_categories ADD FOREIGN KEY (category_id) REFERENCES categories (id);
+ALTER TABLE categories ADD FOREIGN KEY (parent_id) REFERENCES categories (id);
+
+
+

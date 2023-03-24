@@ -1,3 +1,34 @@
-#type Query {
-#
-#}
+input FilterCategory {
+    id: Int
+    keyword: String
+}
+
+input Paging {
+    page: Int
+    limit: Int
+    order_by: String
+    asc: Boolean
+
+    cursor: String
+}
+
+type PageInfo {
+    page: Int!
+    limit: Int!
+    order_by: String!
+    asc: Boolean!
+    total: Int!
+
+    cursor: String
+    next_cursor: String!
+}
+
+type CategoryResult {
+    categories: [Category!]!
+    pageInfo: PageInfo!
+}
+
+type Query {
+    categories(filter: FilterCategory, paging: Paging ): CategoryResult!
+    category(id: Int!): Category!
+}

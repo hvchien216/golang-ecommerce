@@ -37,7 +37,7 @@ type Product struct {
 	Status      null.String  `boil:"status" json:"status,omitempty" toml:"status" yaml:"status,omitempty"`
 	IsComplete  null.Bool    `boil:"is_complete" json:"is_complete,omitempty" toml:"is_complete" yaml:"is_complete,omitempty"`
 	CreatedAt   time.Time    `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
-	UpdatedAt   null.Time    `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
+	UpdatedAt   time.Time    `boil:"updated_at" json:"updated_at" toml:"updated_at" yaml:"updated_at"`
 
 	R *productR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L productL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -109,29 +109,6 @@ var ProductTableColumns = struct {
 
 // Generated where
 
-type whereHelperint struct{ field string }
-
-func (w whereHelperint) EQ(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperint) NEQ(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperint) LT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperint) LTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperint) GT(x int) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperint) GTE(x int) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperint) IN(slice []int) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
-}
-func (w whereHelperint) NIN(slice []int) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
-
 type whereHelperstring struct{ field string }
 
 func (w whereHelperstring) EQ(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
@@ -154,30 +131,6 @@ func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	}
 	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
 }
-
-type whereHelpernull_String struct{ field string }
-
-func (w whereHelpernull_String) EQ(x null.String) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, false, x)
-}
-func (w whereHelpernull_String) NEQ(x null.String) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, true, x)
-}
-func (w whereHelpernull_String) LT(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpernull_String) LTE(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpernull_String) GT(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpernull_String) GTE(x null.String) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-
-func (w whereHelpernull_String) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
-func (w whereHelpernull_String) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
 type whereHelpernull_Float64 struct{ field string }
 
@@ -227,51 +180,6 @@ func (w whereHelpernull_Bool) GTE(x null.Bool) qm.QueryMod {
 func (w whereHelpernull_Bool) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
 func (w whereHelpernull_Bool) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
-type whereHelpertime_Time struct{ field string }
-
-func (w whereHelpertime_Time) EQ(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.EQ, x)
-}
-func (w whereHelpertime_Time) NEQ(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.NEQ, x)
-}
-func (w whereHelpertime_Time) LT(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpertime_Time) LTE(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpertime_Time) GT(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpertime_Time) GTE(x time.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-
-type whereHelpernull_Time struct{ field string }
-
-func (w whereHelpernull_Time) EQ(x null.Time) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, false, x)
-}
-func (w whereHelpernull_Time) NEQ(x null.Time) qm.QueryMod {
-	return qmhelper.WhereNullEQ(w.field, true, x)
-}
-func (w whereHelpernull_Time) LT(x null.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LT, x)
-}
-func (w whereHelpernull_Time) LTE(x null.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.LTE, x)
-}
-func (w whereHelpernull_Time) GT(x null.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GT, x)
-}
-func (w whereHelpernull_Time) GTE(x null.Time) qm.QueryMod {
-	return qmhelper.Where(w.field, qmhelper.GTE, x)
-}
-
-func (w whereHelpernull_Time) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
-func (w whereHelpernull_Time) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
-
 var ProductWhere = struct {
 	ID          whereHelperint
 	Name        whereHelperstring
@@ -286,7 +194,7 @@ var ProductWhere = struct {
 	Status      whereHelpernull_String
 	IsComplete  whereHelpernull_Bool
 	CreatedAt   whereHelpertime_Time
-	UpdatedAt   whereHelpernull_Time
+	UpdatedAt   whereHelpertime_Time
 }{
 	ID:          whereHelperint{field: "\"products\".\"id\""},
 	Name:        whereHelperstring{field: "\"products\".\"name\""},
@@ -301,20 +209,31 @@ var ProductWhere = struct {
 	Status:      whereHelpernull_String{field: "\"products\".\"status\""},
 	IsComplete:  whereHelpernull_Bool{field: "\"products\".\"is_complete\""},
 	CreatedAt:   whereHelpertime_Time{field: "\"products\".\"created_at\""},
-	UpdatedAt:   whereHelpernull_Time{field: "\"products\".\"updated_at\""},
+	UpdatedAt:   whereHelpertime_Time{field: "\"products\".\"updated_at\""},
 }
 
 // ProductRels is where relationship names are stored.
 var ProductRels = struct {
-}{}
+	Categories string
+}{
+	Categories: "Categories",
+}
 
 // productR is where relationships are stored.
 type productR struct {
+	Categories CategorySlice `boil:"Categories" json:"Categories" toml:"Categories" yaml:"Categories"`
 }
 
 // NewStruct creates a new relationship struct
 func (*productR) NewStruct() *productR {
 	return &productR{}
+}
+
+func (r *productR) GetCategories() CategorySlice {
+	if r == nil {
+		return nil
+	}
+	return r.Categories
 }
 
 // productL is where Load methods for each relationship are stored.
@@ -419,6 +338,274 @@ func (q productQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bo
 	return count > 0, nil
 }
 
+// Categories retrieves all the category's Categories with an executor.
+func (o *Product) Categories(mods ...qm.QueryMod) categoryQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.InnerJoin("\"product_categories\" on \"categories\".\"id\" = \"product_categories\".\"category_id\""),
+		qm.Where("\"product_categories\".\"product_id\"=?", o.ID),
+	)
+
+	return Categories(queryMods...)
+}
+
+// LoadCategories allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (productL) LoadCategories(ctx context.Context, e boil.ContextExecutor, singular bool, maybeProduct interface{}, mods queries.Applicator) error {
+	var slice []*Product
+	var object *Product
+
+	if singular {
+		object = maybeProduct.(*Product)
+	} else {
+		slice = *maybeProduct.(*[]*Product)
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &productR{}
+		}
+		args = append(args, object.ID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &productR{}
+			}
+
+			for _, a := range args {
+				if a == obj.ID {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.ID)
+		}
+	}
+
+	if len(args) == 0 {
+		return nil
+	}
+
+	query := NewQuery(
+		qm.Select("\"categories\".\"id\", \"categories\".\"name\", \"categories\".\"description\", \"categories\".\"parent_id\", \"categories\".\"created_at\", \"categories\".\"updated_at\", \"a\".\"product_id\""),
+		qm.From("\"categories\""),
+		qm.InnerJoin("\"product_categories\" as \"a\" on \"categories\".\"id\" = \"a\".\"category_id\""),
+		qm.WhereIn("\"a\".\"product_id\" in ?", args...),
+	)
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load categories")
+	}
+
+	var resultSlice []*Category
+
+	var localJoinCols []int
+	for results.Next() {
+		one := new(Category)
+		var localJoinCol int
+
+		err = results.Scan(&one.ID, &one.Name, &one.Description, &one.ParentID, &one.CreatedAt, &one.UpdatedAt, &localJoinCol)
+		if err != nil {
+			return errors.Wrap(err, "failed to scan eager loaded results for categories")
+		}
+		if err = results.Err(); err != nil {
+			return errors.Wrap(err, "failed to plebian-bind eager loaded slice categories")
+		}
+
+		resultSlice = append(resultSlice, one)
+		localJoinCols = append(localJoinCols, localJoinCol)
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on categories")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for categories")
+	}
+
+	if singular {
+		object.R.Categories = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &categoryR{}
+			}
+			foreign.R.Products = append(foreign.R.Products, object)
+		}
+		return nil
+	}
+
+	for i, foreign := range resultSlice {
+		localJoinCol := localJoinCols[i]
+		for _, local := range slice {
+			if local.ID == localJoinCol {
+				local.R.Categories = append(local.R.Categories, foreign)
+				if foreign.R == nil {
+					foreign.R = &categoryR{}
+				}
+				foreign.R.Products = append(foreign.R.Products, local)
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// AddCategories adds the given related objects to the existing relationships
+// of the product, optionally inserting them as new records.
+// Appends related to o.R.Categories.
+// Sets related.R.Products appropriately.
+func (o *Product) AddCategories(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Category) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		}
+	}
+
+	for _, rel := range related {
+		query := "insert into \"product_categories\" (\"product_id\", \"category_id\") values ($1, $2)"
+		values := []interface{}{o.ID, rel.ID}
+
+		if boil.IsDebug(ctx) {
+			writer := boil.DebugWriterFrom(ctx)
+			fmt.Fprintln(writer, query)
+			fmt.Fprintln(writer, values)
+		}
+		_, err = exec.ExecContext(ctx, query, values...)
+		if err != nil {
+			return errors.Wrap(err, "failed to insert into join table")
+		}
+	}
+	if o.R == nil {
+		o.R = &productR{
+			Categories: related,
+		}
+	} else {
+		o.R.Categories = append(o.R.Categories, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &categoryR{
+				Products: ProductSlice{o},
+			}
+		} else {
+			rel.R.Products = append(rel.R.Products, o)
+		}
+	}
+	return nil
+}
+
+// SetCategories removes all previously related items of the
+// product replacing them completely with the passed
+// in related items, optionally inserting them as new records.
+// Sets o.R.Products's Categories accordingly.
+// Replaces o.R.Categories with related.
+// Sets related.R.Products's Categories accordingly.
+func (o *Product) SetCategories(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Category) error {
+	query := "delete from \"product_categories\" where \"product_id\" = $1"
+	values := []interface{}{o.ID}
+	if boil.IsDebug(ctx) {
+		writer := boil.DebugWriterFrom(ctx)
+		fmt.Fprintln(writer, query)
+		fmt.Fprintln(writer, values)
+	}
+	_, err := exec.ExecContext(ctx, query, values...)
+	if err != nil {
+		return errors.Wrap(err, "failed to remove relationships before set")
+	}
+
+	removeCategoriesFromProductsSlice(o, related)
+	if o.R != nil {
+		o.R.Categories = nil
+	}
+
+	return o.AddCategories(ctx, exec, insert, related...)
+}
+
+// RemoveCategories relationships from objects passed in.
+// Removes related items from R.Categories (uses pointer comparison, removal does not keep order)
+// Sets related.R.Products.
+func (o *Product) RemoveCategories(ctx context.Context, exec boil.ContextExecutor, related ...*Category) error {
+	if len(related) == 0 {
+		return nil
+	}
+
+	var err error
+	query := fmt.Sprintf(
+		"delete from \"product_categories\" where \"product_id\" = $1 and \"category_id\" in (%s)",
+		strmangle.Placeholders(dialect.UseIndexPlaceholders, len(related), 2, 1),
+	)
+	values := []interface{}{o.ID}
+	for _, rel := range related {
+		values = append(values, rel.ID)
+	}
+
+	if boil.IsDebug(ctx) {
+		writer := boil.DebugWriterFrom(ctx)
+		fmt.Fprintln(writer, query)
+		fmt.Fprintln(writer, values)
+	}
+	_, err = exec.ExecContext(ctx, query, values...)
+	if err != nil {
+		return errors.Wrap(err, "failed to remove relationships before set")
+	}
+	removeCategoriesFromProductsSlice(o, related)
+	if o.R == nil {
+		return nil
+	}
+
+	for _, rel := range related {
+		for i, ri := range o.R.Categories {
+			if rel != ri {
+				continue
+			}
+
+			ln := len(o.R.Categories)
+			if ln > 1 && i < ln-1 {
+				o.R.Categories[i] = o.R.Categories[ln-1]
+			}
+			o.R.Categories = o.R.Categories[:ln-1]
+			break
+		}
+	}
+
+	return nil
+}
+
+func removeCategoriesFromProductsSlice(o *Product, related []*Category) {
+	for _, rel := range related {
+		if rel.R == nil {
+			continue
+		}
+		for i, ri := range rel.R.Products {
+			if o.ID != ri.ID {
+				continue
+			}
+
+			ln := len(rel.R.Products)
+			if ln > 1 && i < ln-1 {
+				rel.R.Products[i] = rel.R.Products[ln-1]
+			}
+			rel.R.Products = rel.R.Products[:ln-1]
+			break
+		}
+	}
+}
+
 // Products retrieves all the records using an executor.
 func Products(mods ...qm.QueryMod) productQuery {
 	mods = append(mods, qm.From("\"products\""))
@@ -470,8 +657,8 @@ func (o *Product) Insert(ctx context.Context, exec boil.ContextExecutor, columns
 		if o.CreatedAt.IsZero() {
 			o.CreatedAt = currTime
 		}
-		if queries.MustTime(o.UpdatedAt).IsZero() {
-			queries.SetScanner(&o.UpdatedAt, currTime)
+		if o.UpdatedAt.IsZero() {
+			o.UpdatedAt = currTime
 		}
 	}
 
@@ -548,7 +735,7 @@ func (o *Product) Update(ctx context.Context, exec boil.ContextExecutor, columns
 	if !boil.TimestampsAreSkipped(ctx) {
 		currTime := time.Now().In(boil.GetLocation())
 
-		queries.SetScanner(&o.UpdatedAt, currTime)
+		o.UpdatedAt = currTime
 	}
 
 	var err error
@@ -684,7 +871,7 @@ func (o *Product) Upsert(ctx context.Context, exec boil.ContextExecutor, updateO
 		if o.CreatedAt.IsZero() {
 			o.CreatedAt = currTime
 		}
-		queries.SetScanner(&o.UpdatedAt, currTime)
+		o.UpdatedAt = currTime
 	}
 
 	nzDefaults := queries.NonZeroDefaultSet(productColumnsWithDefault, o)

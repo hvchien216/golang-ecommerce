@@ -13,16 +13,16 @@ func (s *sqlStore) Create(ctx context.Context, data *productmodel.Product) (*pro
 
 	product := orm.Product{
 		Name:        data.Name,
-		Description: null.StringFromPtr(&data.Description),
-		Slug:        null.StringFromPtr(data.Slug),
-		Code:        null.StringFromPtr(data.Code),
-		Image:       null.StringFromPtr(data.Image),
-		Images:      null.StringFromPtr(data.Images),
-		Price:       null.Float64{Float64: data.Price},
-		PriceMin:    null.Float64FromPtr(data.PriceMin),
-		PriceMax:    null.Float64FromPtr(data.PriceMax),
-		Status:      null.String{String: data.Status.String()},
-		IsComplete:  null.Bool{Bool: data.IsComplete},
+		Description: null.StringFrom(data.Description),
+		Slug:        null.StringFrom(data.Slug),
+		Code:        null.StringFrom(data.Code),
+		Image:       null.StringFrom(data.Image),
+		Images:      null.StringFrom(data.Images),
+		Price:       null.Float64From(data.Price),
+		PriceMin:    null.Float64From(data.PriceMin),
+		PriceMax:    null.Float64From(data.PriceMax),
+		Status:      null.StringFrom(data.Status.String()),
+		IsComplete:  null.BoolFrom(data.IsComplete),
 	}
 
 	err := product.Insert(ctx, db, boil.Infer())
@@ -32,7 +32,7 @@ func (s *sqlStore) Create(ctx context.Context, data *productmodel.Product) (*pro
 
 	data.Id = product.ID
 	data.CreatedAt = product.CreatedAt
-	data.UpdatedAt = product.UpdatedAt.Time
+	data.UpdatedAt = product.UpdatedAt
 
 	return data, nil
 }

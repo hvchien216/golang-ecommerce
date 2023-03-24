@@ -8,10 +8,27 @@ exec:
 skip_validation: true
 skip_mod_tidy: true
 
+# gqlgen will search for any type names in the schema in these go packages
+# if they match it will use them, otherwise it will generate them.
+autobind:
+  - "github.com/hvchien216/golang-ecommerce/internal/orm"
+
 models:
-  Product:
-    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.Product
-  ProductStatus:
-    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.ProductStatus
-  NewProductInput:
-    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.NewProductInput
+#  Product:
+#    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.Product
+#  ProductStatus:
+#    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.ProductStatus
+#  NewProductInput:
+#    model: github.com/hvchien216/golang-ecommerce/internal/modules/product/productmodel.NewProductInput
+#  Category:
+#    model: github.com/hvchien216/golang-ecommerce/internal/modules/category/categorymodel.Category
+  NewCategoryInput:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/category/categorymodel.NewCategoryInput
+  FilterCategory:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/category/categorymodel.Filter
+  Paging:
+    model: github.com/hvchien216/golang-ecommerce/common.Paging
+  CategoryResult:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/category/categorymodel.CategoryResult
+  PageInfo:
+    model: github.com/hvchien216/golang-ecommerce/internal/modules/category/categorymodel.PageInfo

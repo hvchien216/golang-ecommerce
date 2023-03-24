@@ -11,7 +11,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hvchien216/golang-ecommerce/config"
 	"github.com/hvchien216/golang-ecommerce/internal/gql"
-	"github.com/hvchien216/golang-ecommerce/internal/modules/product/producttransport/gqlproduct"
+	"github.com/hvchien216/golang-ecommerce/internal/modules/category/categorytransport/gqlcategory"
 	"github.com/hvchien216/golang-ecommerce/internal/pkg/component/appctx"
 	"github.com/hvchien216/golang-ecommerce/internal/pkg/db/pg"
 	"github.com/volatiletech/sqlboiler/v4/boil"
@@ -62,7 +62,7 @@ func initRouter(
 	r.Use(middleware.Recoverer)
 
 	const path = "/api/v1/graphql"
-	r.Handle(path, RouteHandler(gql.NewSchema(gqlproduct.New(appCtx)), true))
+	r.Handle(path, RouteHandler(gql.NewSchema(gqlcategory.New(appCtx)), true))
 
 	return r, nil
 }

@@ -4,7 +4,11 @@
 package orm
 
 var TableNames = struct {
-	Products string
+	Categories        string
+	ProductCategories string
+	Products          string
 }{
-	Products: "products",
+	Categories:        "categories",
+	ProductCategories: "product_categories",
+	Products:          "products",
 }

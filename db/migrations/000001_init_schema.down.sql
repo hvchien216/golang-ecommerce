@@ -1,6 +1,7 @@
 -- Drop the foreign key constraints on the product_categories table
 ALTER TABLE product_categories DROP CONSTRAINT IF EXISTS product_categories_product_id_fkey;
 ALTER TABLE product_categories DROP CONSTRAINT IF EXISTS product_categories_category_id_fkey;
+ALTER TABLE categories DROP FOREIGN KEY FK_categories_parent_id;
 
 -- Drop the product_categories join table
 DROP TABLE IF EXISTS product_categories;

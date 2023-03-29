@@ -25,7 +25,7 @@ import (
 // Category is an object representing the database table.
 type Category struct {
 	ID          int         `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Name        null.String `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
+	Name        string      `boil:"name" json:"name" toml:"name" yaml:"name"`
 	Description null.String `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
 	ParentID    null.Int    `boil:"parent_id" json:"parent_id,omitempty" toml:"parent_id" yaml:"parent_id,omitempty"`
 	CreatedAt   time.Time   `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
@@ -85,6 +85,29 @@ func (w whereHelperint) IN(slice []int) qm.QueryMod {
 	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
 }
 func (w whereHelperint) NIN(slice []int) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
+}
+
+type whereHelperstring struct{ field string }
+
+func (w whereHelperstring) EQ(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) IN(slice []string) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
+}
+func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
 	values := make([]interface{}, 0, len(slice))
 	for _, value := range slice {
 		values = append(values, value)
@@ -163,14 +186,14 @@ func (w whereHelpertime_Time) GTE(x time.Time) qm.QueryMod {
 
 var CategoryWhere = struct {
 	ID          whereHelperint
-	Name        whereHelpernull_String
+	Name        whereHelperstring
 	Description whereHelpernull_String
 	ParentID    whereHelpernull_Int
 	CreatedAt   whereHelpertime_Time
 	UpdatedAt   whereHelpertime_Time
 }{
 	ID:          whereHelperint{field: "\"categories\".\"id\""},
-	Name:        whereHelpernull_String{field: "\"categories\".\"name\""},
+	Name:        whereHelperstring{field: "\"categories\".\"name\""},
 	Description: whereHelpernull_String{field: "\"categories\".\"description\""},
 	ParentID:    whereHelpernull_Int{field: "\"categories\".\"parent_id\""},
 	CreatedAt:   whereHelpertime_Time{field: "\"categories\".\"created_at\""},
@@ -226,8 +249,8 @@ type categoryL struct{}
 
 var (
 	categoryAllColumns            = []string{"id", "name", "description", "parent_id", "created_at", "updated_at"}
-	categoryColumnsWithoutDefault = []string{}
-	categoryColumnsWithDefault    = []string{"id", "name", "description", "parent_id", "created_at", "updated_at"}
+	categoryColumnsWithoutDefault = []string{"name"}
+	categoryColumnsWithDefault    = []string{"id", "description", "parent_id", "created_at", "updated_at"}
 	categoryPrimaryKeyColumns     = []string{"id"}
 	categoryGeneratedColumns      = []string{}
 )

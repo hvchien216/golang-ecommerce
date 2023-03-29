@@ -6,19 +6,7 @@ import (
 	"github.com/hvchien216/golang-ecommerce/internal/orm"
 )
 
-type CreateCategoryStore interface {
-	Create(context.Context, categorymodel.NewCategoryInput) (*orm.Category, error)
-}
-
-type createCategoryBiz struct {
-	store CreateCategoryStore
-}
-
-func NewCreateCategoryBiz(store CreateCategoryStore) *createCategoryBiz {
-	return &createCategoryBiz{store: store}
-}
-
-func (biz *createCategoryBiz) CreateCategory(
+func (biz business) CreateCategory(
 	ctx context.Context,
 	input categorymodel.NewCategoryInput) (*orm.Category, error) {
 

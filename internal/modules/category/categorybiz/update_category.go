@@ -5,25 +5,7 @@ import (
 	"github.com/hvchien216/golang-ecommerce/internal/orm"
 )
 
-type UpdateCategoryStore interface {
-	Update(
-		ctx context.Context,
-		id int,
-		name string,
-		description *string,
-		parentID *int,
-	) (*orm.Category, error)
-}
-
-type updateCategoryBiz struct {
-	store UpdateCategoryStore
-}
-
-func NewUpdateCategoryBiz(store UpdateCategoryStore) *updateCategoryBiz {
-	return &updateCategoryBiz{store: store}
-}
-
-func (biz *updateCategoryBiz) UpdateCategory(
+func (biz business) UpdateCategory(
 	ctx context.Context,
 	id int,
 	name string,

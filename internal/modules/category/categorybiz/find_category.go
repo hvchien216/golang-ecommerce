@@ -7,19 +7,7 @@ import (
 	"github.com/hvchien216/golang-ecommerce/internal/orm"
 )
 
-type FindCategoryStore interface {
-	FindById(context.Context, int) (*orm.Category, error)
-}
-
-type findCategoryBiz struct {
-	store FindCategoryStore
-}
-
-func NewFindCategoryBiz(store FindCategoryStore) *findCategoryBiz {
-	return &findCategoryBiz{store: store}
-}
-
-func (biz *findCategoryBiz) FindCategory(
+func (biz business) FindCategory(
 	ctx context.Context,
 	id int) (*orm.Category, error) {
 

@@ -17,7 +17,7 @@ func (s *sqlStore) Update(ctx context.Context, id int, name string, description 
 		return nil, err
 	}
 
-	cat.Name = null.StringFrom(name)
+	cat.Name = name
 
 	if description != nil {
 		cat.Description = null.StringFromPtr(description)

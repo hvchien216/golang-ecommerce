@@ -12,7 +12,7 @@ import (
 func (i impl) CreateCategory(ctx context.Context, input categorymodel.NewCategoryInput) (*orm.Category, error) {
 
 	store := categorystorage.NewSQLStore(i.appCtx.GetMainDBConnection())
-	biz := categorybiz.NewCreateCategoryBiz(store)
+	biz := categorybiz.New(store)
 
 	cat, err := biz.CreateCategory(ctx, input)
 

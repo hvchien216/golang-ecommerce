@@ -12,7 +12,7 @@ func (s *sqlStore) Create(ctx context.Context, input categorymodel.NewCategoryIn
 	db := s.db
 
 	category := &orm.Category{
-		Name:        null.StringFrom(input.Name),
+		Name:        input.Name,
 		Description: null.StringFrom(input.Description),
 		ParentID:    null.IntFromPtr(input.ParentID),
 	}

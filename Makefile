@@ -49,7 +49,7 @@ gql:
 api-go-generate:
 	${API_COMPOSE} sh -c "go generate ./..."
 api-test:
-	@${API_COMPOSE} sh -c "go test -mod=vendor -failfast -timeout 5m ./..."
+	@${API_COMPOSE} sh -c "go test -mod=vendor -coverprofile=c.out -failfast -timeout 5m ./..."
 #	@${API_COMPOSE} sh -c "go test -mod=vendor -coverprofile=c.out -failfast -timeout 5m ./..."
 api-run:
 	@#${API_COMPOSE} sh -c ""

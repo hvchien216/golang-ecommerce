@@ -16,7 +16,7 @@ func (i impl) UpdateCategory(
 ) (*orm.Category, error) {
 
 	store := categorystorage.NewSQLStore(i.appCtx.GetMainDBConnection())
-	biz := categorybiz.NewUpdateCategoryBiz(store)
+	biz := categorybiz.New(store)
 
 	cat, err := biz.UpdateCategory(ctx, id, name, description, parentID)
 

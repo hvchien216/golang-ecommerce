@@ -13,7 +13,7 @@ import (
 func (i impl) Categories(ctx context.Context, filter *categorymodel.Filter, paging *common.Paging) (*categorymodel.CategoryResult, error) {
 
 	store := categorystorage.NewSQLStore(i.appCtx.GetMainDBConnection())
-	biz := categorybiz.NewListCategoryBiz(store)
+	biz := categorybiz.New(store)
 
 	cats, count, err := biz.ListCategory(ctx, filter, paging)
 	fmt.Println("biz.ListCategory===>", cats, err, count)

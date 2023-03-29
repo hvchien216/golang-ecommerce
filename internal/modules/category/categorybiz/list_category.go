@@ -8,19 +8,7 @@ import (
 	"github.com/hvchien216/golang-ecommerce/internal/orm"
 )
 
-type ListCategoryStore interface {
-	ListByConditionWithCount(context.Context, *categorymodel.Filter, *common.Paging) ([]*orm.Category, int64, error)
-}
-
-type listCategoryBiz struct {
-	store ListCategoryStore
-}
-
-func NewListCategoryBiz(store ListCategoryStore) *listCategoryBiz {
-	return &listCategoryBiz{store: store}
-}
-
-func (biz *listCategoryBiz) ListCategory(ctx context.Context, filter *categorymodel.Filter, paging *common.Paging) ([]*orm.Category, int64, error) {
+func (biz business) ListCategory(ctx context.Context, filter *categorymodel.Filter, paging *common.Paging) ([]*orm.Category, int64, error) {
 
 	cats, total, err := biz.store.ListByConditionWithCount(ctx, filter, paging)
 

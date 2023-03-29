@@ -24,7 +24,7 @@ func (r queryResolver) Category(ctx context.Context, id int) (*orm.Category, err
 }
 
 func (r categoryResolver) Name(ctx context.Context, obj *orm.Category) (string, error) {
-	return obj.Name.String, nil
+	return obj.Name, nil
 }
 
 func (r categoryResolver) Description(ctx context.Context, obj *orm.Category) (*string, error) {
